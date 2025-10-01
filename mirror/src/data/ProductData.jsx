@@ -1,6 +1,17 @@
+import appleImg from '../assets/images/apple.png';
+import bananaImg from '../assets/images/banana.png';
+import laptopImg from '../assets/images/laptop.png';
+import basketballImg from '../assets/images/basketball.png';
+import deskChairImg from '../assets/images/desk_chair.png';
+import headphonesImg from '../assets/images/headphones.png';
+import coffeeBeansImg from '../assets/images/coffee_beans.png';
+import tshirtImg from '../assets/images/t_shirt.png';
+import smartphoneImg from '../assets/images/smartphone.webp';
+import novelBookImg from '../assets/images/novel_book.png';
+
 const productData = [
     {
-        productName: 'AppleAppleAppleAppleAppleAppleAppleAppleAppleAppleAppleAppleAppleAppleApple',
+        productName: 'Apple',
         productPrice: 1.00,
         rating: 5,
         ratingCount: 20,
@@ -8,6 +19,7 @@ const productData = [
         available: 69,
         category: 'Fruit',
         shipsFrom: "Rauf's Anus",
+        imagePath: appleImg,
     },
     {
         productName: 'Banana',
@@ -18,6 +30,7 @@ const productData = [
         available: 120,
         category: 'Fruit',
         shipsFrom: "Rauf's Anus",
+        imagePath: bananaImg,
     },
     {
         productName: 'Laptop',
@@ -28,6 +41,7 @@ const productData = [
         available: 45,
         category: 'Electronics',
         shipsFrom: "TechMart",
+        imagePath: laptopImg,
     },
     {
         productName: 'Basketball',
@@ -38,6 +52,7 @@ const productData = [
         available: 150,
         category: 'Sports',
         shipsFrom: "SportyHub",
+        imagePath: basketballImg,
     },
     {
         productName: 'Desk Chair',
@@ -48,6 +63,7 @@ const productData = [
         available: 75,
         category: 'Furniture',
         shipsFrom: "HomeLiving Co.",
+        imagePath: deskChairImg,
     },
     {
         productName: 'Headphones',
@@ -58,6 +74,7 @@ const productData = [
         available: 90,
         category: 'Accessories',
         shipsFrom: "AudioWorld",
+        imagePath: headphonesImg,
     },
     {
         productName: 'Coffee Beans',
@@ -68,6 +85,7 @@ const productData = [
         available: 300,
         category: 'Groceries',
         shipsFrom: "BeanExpress",
+        imagePath: coffeeBeansImg,
     },
     {
         productName: 'T-Shirt',
@@ -78,6 +96,7 @@ const productData = [
         available: 500,
         category: 'Clothing',
         shipsFrom: "StyleZone",
+        imagePath: tshirtImg,
     },
     {
         productName: 'Smartphone',
@@ -88,6 +107,7 @@ const productData = [
         available: 100,
         category: 'Electronics',
         shipsFrom: "MobileHub",
+        imagePath: smartphoneImg,
     },
     {
         productName: 'Novel Book',
@@ -98,6 +118,7 @@ const productData = [
         available: 180,
         category: 'Books',
         shipsFrom: "ReadersCorner",
+        imagePath: novelBookImg,
     },
 ]
 
