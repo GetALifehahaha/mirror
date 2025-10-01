@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { Home, NotFound, Cart } from './pages'
+import { Product, NotFound, Cart, ProductDetails } from './pages'
 import { Navbar, Footer } from './components'
 
 function App() {
@@ -9,7 +9,8 @@ function App() {
       <Navbar />
       
       <Routes>
-        <Route path='/' element={<Home />}/>
+        <Route path='/products' element={<Product />}/>
+        <Route path='/products/:id' element={<ProductDetails  />}/>
         <Route path='/cart' element={<Cart />}/>
         <Route path='*' element={<NotFound />}/>
       </Routes>

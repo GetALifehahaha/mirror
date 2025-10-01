@@ -12,11 +12,13 @@ const Navbar = () => {
 
         <div className='flex flex-row gap-4 items-center'>
             <NavLink
-              to={'/'}
-              className={({ isActive }) => isActive ? "text-accent-10 font-semibold" : "text-text"}> Home</NavLink>
+              to={'/products'}
+              className={({ isActive }) => isActive ? "text-accent-10 font-semibold" : "text-text"}> 
+            Home</NavLink>
             <NavLink
               to={'/cart'}
-              className={({ isActive }) => isActive ? "text-accent-10 font-semibold" : "text-text"}> Cart</NavLink>
+              className={({ isActive }) => isActive ? "text-accent-10 font-semibold" : "text-text"}> 
+            Cart</NavLink>
         </div>
     </div>
   )

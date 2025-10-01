@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div className='flex flex-col mt-20 w-full border-t-2 border-block-30/25'>
         {/* About */}
-        <div className='flex flex-row px-8 py-4 justify-evenly gap-8 text-text/75 text-sm'>
+        <div className='flex flex-row px-8 py-4 justify-evenly gap-8 text-text/75 text-xs sm:text-md'>
             {/* The Website */}
             <div className='flex flex-col gap-8 flex-1 text-justify'>
                 <h5 className='font-semibold text-2xl'>Mirror</h5>
