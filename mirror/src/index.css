@@ -1,1 +1,13 @@
 @import 'tailwindcss';
+
+body{
+    background-color: var(--color-main-60);
+}
+
+@theme {
+    --color-main-60: #f3f3f3;
+    --color-block-30: #3A4750;
+    --color-accent-10: #2185D5;
+
+    --color-text: #303841;
+}
