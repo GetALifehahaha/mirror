@@ -29,12 +29,13 @@ const ProductDetails = () => {
         <div className='w-[90vw] mx-auto flex flex-col gap-4'>
             {/* Hero Section */}
             <div className='bg-white p-2 flex flex-col md:flex-row rounded-md'>
-                <div className='flex-1 flex justify-center items-center rounded-md overflow-hidden'>
-                    <img src={`${productDetails.imagePath}`}/>
+                <div className='flex-1 flex justify-center items-center '>
+                    <img src={`${productDetails.imagePath}`} className='rounded-md max-h-[400px] object-contain'/>
                 </div>
 
                 <div className='flex-1'>
                     {/* Header */}
+                    {/* TODO: Turn to header card */}
                     <div>
                         <h3 className='text-2xl font-bold p-2'>{productDetails.productName}</h3>
 
@@ -46,13 +47,14 @@ const ProductDetails = () => {
                     </div>
 
                     {/* Price */}
+                    {/* TODO: Turn to price card */}
 
                     <div className='m-2 p-4 bg-main-60/50 text-accent-10 font-bold text-xl rounded-md'>
                         PHP {productDetails.productPrice % 1 === 0 ? productDetails.productPrice + '.00' : productDetails.productPrice}
                     </div>
 
                     {/* Quantity */}
-
+                    {/* TODO: Turn to quantity card */}
                     <div className='p-4 text-text flex flex-row gap-1 mt-12'>
                         <h3 className='text-md text-text/50 mr-10'>Available</h3>
                         There are <h3 className={`font-medium ${productDetails.available > 10 ? 'text-accent-10' : 'text-red-500'}`}>{productDetails.available}</h3> units left.
@@ -67,7 +69,7 @@ const ProductDetails = () => {
                     </div>
 
                     {/* Options */}
-
+                    {/* TODO: Turn to price card */}
                     <div className='p-4 flex flex-row-reverse md:flex-row gap-2 items-center mt-8'>
                         <button className='flex flex-row items-center gap-1 border-accent-10 border-2 text-accent-10 p-2 rounded-sm'><MdAddShoppingCart className='text-accent-10' /> Add to Cart</button>
                         <button className='p-2 rounded-sm bg-accent-10 text-white font-medium min-w-30'>Buy Now</button>
@@ -78,6 +80,7 @@ const ProductDetails = () => {
             </div>
 
             {/* Additional Information */}
+            {/* TODO: Turn to additional information card */}
             <div className='bg-white p-2 flex flex-col gap-4 rounded-md'>
                 <div className='flex flex-row gap-1'>
                     <h3 className='text-text/50'>Category: </h3>
@@ -92,6 +95,7 @@ const ProductDetails = () => {
                 </div>
             </div>
 
+            {/* TODO: Style the heck out of this */}
             <div className='flex flex-row gap-2 ml-auto'>
                 <button className='p-2 rounded-sm border-2 border-accent-10 text-accent-10 font-medium min-w-30' onClick={() => navigate(`/products/${id}/specs`)}>Specs</button>
                 <button className='p-2 rounded-sm border-2 border-accent-10 text-accent-10 font-medium min-w-30' onClick={() => navigate('/products')}>Back</button>
