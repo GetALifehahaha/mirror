@@ -20,6 +20,12 @@ const productData = [
         category: 'Fruit',
         shipsFrom: "Rauf's Anus",
         imagePath: appleImg,
+        specifications: {
+            weight: "150g (avg per piece)",
+            variety: "Fuji",
+            origin: "Washington, USA",
+            shelfLife: "1–2 weeks refrigerated"
+        }
     },
     {
         productName: 'Banana',
@@ -31,6 +37,12 @@ const productData = [
         category: 'Fruit',
         shipsFrom: "Rauf's Anus",
         imagePath: bananaImg,
+        specifications: {
+            weight: "120g (avg per piece)",
+            variety: "Cavendish",
+            origin: "Philippines",
+            shelfLife: "5–7 days at room temperature"
+        }
     },
     {
         productName: 'Laptop',
@@ -42,6 +54,15 @@ const productData = [
         category: 'Electronics',
         shipsFrom: "TechMart",
         imagePath: laptopImg,
+        specifications: {
+            model: "ProBook 15",
+            processor: "Intel Core i5, 12th Gen",
+            ram: "16GB DDR4",
+            storage: "512GB SSD",
+            display: "15.6\" FHD",
+            batteryLife: "Up to 8 hours",
+            os: "Windows 11"
+        }
     },
     {
         productName: 'Basketball',
@@ -53,6 +74,13 @@ const productData = [
         category: 'Sports',
         shipsFrom: "SportyHub",
         imagePath: basketballImg,
+        specifications: {
+            material: "Synthetic Leather",
+            size: "7 (official size)",
+            weight: "600g",
+            brand: "Spalding",
+            use: "Indoor/Outdoor"
+        }
     },
     {
         productName: 'Desk Chair',
@@ -64,6 +92,13 @@ const productData = [
         category: 'Furniture',
         shipsFrom: "HomeLiving Co.",
         imagePath: deskChairImg,
+        specifications: {
+            material: "Mesh back, cushioned seat",
+            color: "Black",
+            features: "Adjustable height, swivel, ergonomic design",
+            weightCapacity: "120kg",
+            dimensions: "45cm x 45cm x 95cm"
+        }
     },
     {
         productName: 'Headphones',
@@ -75,6 +110,13 @@ const productData = [
         category: 'Accessories',
         shipsFrom: "AudioWorld",
         imagePath: headphonesImg,
+        specifications: {
+            type: "Over-Ear, Wireless Bluetooth 5.0",
+            batteryLife: "30 hours",
+            noiseCancellation: "Active Noise Cancelling (ANC)",
+            charging: "USB-C, Fast Charging",
+            brand: "Sony WH-1000XM Series"
+        }
     },
     {
         productName: 'Coffee Beans',
@@ -86,6 +128,13 @@ const productData = [
         category: 'Groceries',
         shipsFrom: "BeanExpress",
         imagePath: coffeeBeansImg,
+        specifications: {
+            variety: "Arabica, Medium Roast",
+            origin: "Colombia",
+            weight: "500g pack",
+            flavorNotes: "Chocolate, Caramel, Citrus",
+            bestBefore: "12 months"
+        }
     },
     {
         productName: 'T-Shirt',
@@ -97,6 +146,13 @@ const productData = [
         category: 'Clothing',
         shipsFrom: "StyleZone",
         imagePath: tshirtImg,
+        specifications: {
+            material: "100% Cotton",
+            sizes: ["S", "M", "L", "XL"],
+            colors: ["White", "Black", "Blue"],
+            fit: "Regular",
+            care: "Machine washable"
+        }
     },
     {
         productName: 'Smartphone',
@@ -108,6 +164,15 @@ const productData = [
         category: 'Electronics',
         shipsFrom: "MobileHub",
         imagePath: smartphoneImg,
+        specifications: {
+            model: "Poco X7 Pro 5G",
+            display: "6.7\" AMOLED, 120Hz",
+            processor: "Snapdragon 8s Gen 3",
+            ram: "12GB",
+            storage: "512GB",
+            battery: "5000mAh, 67W Turbo Charging",
+            os: "Android 14 (MIUI)"
+        }
     },
     {
         productName: 'Novel Book',
@@ -119,7 +184,16 @@ const productData = [
         category: 'Books',
         shipsFrom: "ReadersCorner",
         imagePath: novelBookImg,
-    },
+        specifications: {
+            title: "The Subtle Art of Not Giving a F*ck",
+            author: "Mark Manson",
+            genre: "Self-Help / Personal Development",
+            pages: 224,
+            language: "English",
+            publisher: "HarperOne",
+            isbn: "978-0-06-245771-4"
+        }
+    }
 ]
 
 export default productData;
