@@ -3,3 +3,7 @@ export {default as ProductGrid} from './ProductGrid';
 export {default as Footer} from './Footer'
 export {default as ProductDetailsCard} from './ProductDetailsCard'
 export {default as ProductSpecsCard} from './ProductSpecsCard'
+export {default as ProductDetailsHeaderCard} from './ProductDetailsHeaderCard'
+export {default as ProductDetailsPriceCard} from './ProductDetailsPriceCard'
+export {default as ProductDetailsQuantityCard} from './ProductDetailsQuantityCard'
+export {default as ProductDetailsAdditionalInformationCard} from './ProductDetailsAdditionalInformationCard'
