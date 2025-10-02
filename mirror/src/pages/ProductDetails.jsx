@@ -20,8 +20,24 @@ const ProductDetails = () => {
             else if (method == 'decrease') (quantity - 1 == 0) ? null : setQuantity(quantity - 1);
     }
 
+    const binarySearch = () => {
+        let start = 0;
+        let end = ProductData.length - 1;
+
+        while (start <= end) {
+            let middle = Math.floor(start + (end - start) / 2);
+
+            if (id == ProductData[middle].id) return ProductData[middle]
+
+            if (id > ProductData[middle].id) start = middle + 1
+            else if (id < ProductData[middle].id) end = middle - 1
+        }
+
+        return {}
+    }
+
     useEffect(() => {
-        setProductDetails(ProductData[id]);
+        setProductDetails(binarySearch());
     }, []);
 
 

@@ -10,7 +10,8 @@ import smartphoneImg from '../assets/images/smartphone.webp';
 import novelBookImg from '../assets/images/novel_book.png';
 
 const productData = [
-    {
+    {   
+        id: 0,
         productName: 'Apple',
         productPrice: 1.00,
         rating: 5,
@@ -28,6 +29,7 @@ const productData = [
         }
     },
     {
+        id: 1,
         productName: 'Banana',
         productPrice: 3.00,
         rating: 4.29,
@@ -45,6 +47,7 @@ const productData = [
         }
     },
     {
+        id: 2,
         productName: 'Laptop',
         productPrice: 899.99,
         rating: 4.7,
@@ -65,6 +68,7 @@ const productData = [
         }
     },
     {
+        id: 3,
         productName: 'Basketball',
         productPrice: 25.00,
         rating: 4.3,
@@ -82,7 +86,8 @@ const productData = [
             use: "Indoor/Outdoor"
         }
     },
-    {
+    {   
+        id: 4,
         productName: 'Desk Chair',
         productPrice: 129.99,
         rating: 4.5,
@@ -101,6 +106,7 @@ const productData = [
         }
     },
     {
+        id: 5,
         productName: 'Headphones',
         productPrice: 59.50,
         rating: 4.1,
@@ -119,6 +125,7 @@ const productData = [
         }
     },
     {
+        id: 6,
         productName: 'Coffee Beans',
         productPrice: 15.99,
         rating: 4.6,
@@ -137,6 +144,7 @@ const productData = [
         }
     },
     {
+        id: 7,
         productName: 'T-Shirt',
         productPrice: 12.00,
         rating: 4.0,
@@ -155,6 +163,7 @@ const productData = [
         }
     },
     {
+        id: 8,
         productName: 'Smartphone',
         productPrice: 699.00,
         rating: 4.8,
@@ -175,6 +184,7 @@ const productData = [
         }
     },
     {
+        id: 9,
         productName: 'Novel Book',
         productPrice: 9.99,
         rating: 4.2,
