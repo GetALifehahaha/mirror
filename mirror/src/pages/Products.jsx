@@ -1,27 +1,27 @@
 import React, {useState} from 'react'
-import { ProductGrid, Footer } from '../components'
+import { ProductGrid, Footer, SearchBar } from '../components'
 import ProductData from '../data/ProductData'
+import { useSearchParams } from 'react-router-dom'
 
 const Home = () => {
 
-  const [queryName, setQueryName] = useState("");
-  const [queryCategory, setQueryCategory] = useState("");
-  const [queryMin, setQueryMin] = useState(0);
-  const [queryMax, setQueryMax] = useState(0);
-  const [queryRating, setQueryRating] = useState(0);
-  const [querySort, setQuerySort] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const sorts = [
-    'price', 'rating'
-  ]
+  const searchQuery = searchParams.get("q") || "";
+  const categoryQuery = searchParams.get("cat") || "";
+  const minQuery = searchParams.get("min") || 0;
 
-  const filterProducts = () => {
-    
-  }
+  const productData = ProductData
+  .filter((product) => 
+            product.productName.toLowerCase().includes(searchQuery.toLowerCase()) && 
+            product.category.toLowerCase().includes(categoryQuery.toLowerCase()) &&
+            product.productPrice >= minQuery
+          );
 
   return (
     <div>
-      <ProductGrid productData={ProductData}/>
+      <SearchBar />
+      <ProductGrid productData={productData}/>
       
       <Footer />
     </div>

@@ -11,3 +11,12 @@ body{
 
     --color-text: #303841;
 }
+
+.scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #3A4750;
+
+    &::-webkit-scrollbar-button{
+        display: none;
+    }
+}

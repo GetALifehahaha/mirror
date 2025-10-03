@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CartData } from '../data/CartData'
 import ProductData from '../data/ProductData'
 
 const Cart = () => {
@@ -8,9 +7,11 @@ const Cart = () => {
   const [productsCheckout, setProductsCheckout] = useState([]);
   const [grossTotal, setGrossTotal] = useState(0);
 
+  const cartData = JSON.parse(localStorage.getItem("cartData"));
+
   const productMap = Object.fromEntries(ProductData.map(product => [product.id, product]));
 
-  const cartProducts = CartData.map(item => ({...item, ...productMap[item.id]}))
+  const cartProducts = cartData.map(item => ({...item, ...productMap[item.id]}))
 
   const navigate = useNavigate();
 
@@ -37,7 +38,7 @@ const Cart = () => {
 
   const listProductsForCheckout = productsCheckout.map(product =>
     <tr key={product.id} className='text-right'>
-      <td className='text-left font-semibold px-2'>{product.productName}</td>
+      <td className='text-left font-semibold px-2 truncate'>{product.productName}</td>
       <td className='border-l-2 border-text/10 px-2'>{product.amount}</td>
       <td className='border-l-2 border-text/10 px-2'>{product.productPrice % 1 === 0 ? product.productPrice * product.amount + '.00' : product.productPrice}</td>
     </tr>
@@ -67,19 +68,21 @@ const Cart = () => {
   } 
 
   return (
-    <div className='w-[90vw] rounded-sm bg-white mx-auto p-4 flex flex-row justify-between gap-2'>
-      <div className='flex flex-col p-2 rounded-sm shadow-sm flex-1 gap-2'>
+    <div className='w-[90vw] rounded-sm bg-white mx-auto p-4 flex flex-row justify-between gap-2 h-[80vh]'>
+      {/* Cart */}
+      <div className='flex flex-col p-2 rounded-sm shadow-sm flex-1 gap-2 overflow-y-scroll overflow-hidden scrollbar'>
         <h5 className='text-text/25 text-sm font-medium'>Cart Items</h5>
         {listCartProducts}
       </div>
-    
-      <div className='basis-1/4 rounded-sm shadow-sm p-4 flex flex-col'>
+
+      {/* Checkout */}
+      <div className='basis-1/3 rounded-sm shadow-sm p-4 flex flex-col'>
         <h5 className='text-text/25 text-sm font-medium'>Checkout</h5>
         <table className='text-text table-fixed border-collapse'>
           <thead className='font-medium text-right'>
-            <th className='text-left w-3/5 px-2'>Items</th>
-            <th className='w-1/5 border-l-2 border-text/50 px-2'>Amount</th>
-            <th className='w-1/5 border-l-2 border-text/50 px-2'>Price</th>
+            <th className='text-left w-1/3 px-2'>Items</th>
+            <th className='w-1/3 border-l-2 border-text/50 px-2'>Amount</th>
+            <th className='w-1/3 border-l-2 border-text/50 px-2'>Price</th>
           </thead>
           <tbody>
             {listProductsForCheckout}

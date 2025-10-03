@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Outlet } from 'react-router-dom'
 import ProductData from '../data/ProductData'
 import { MdAdd } from "react-icons/md";
 import { MdHorizontalRule } from "react-icons/md";
@@ -35,6 +35,19 @@ const ProductDetails = () => {
         }
 
         return {}
+    }
+
+    const addToCart = () => {
+        const cartData = JSON.parse(localStorage.getItem("cartData"));
+
+        cartData.push({
+            id,
+            amount: quantity,
+        })
+
+        console.log(cartData)
+
+        localStorage.setItem("cartData", JSON.stringify(cartData));
     }
 
     useEffect(() => {
@@ -77,7 +90,9 @@ const ProductDetails = () => {
                     {/* Options */}
                     {/* TODO: Turn to price card */}
                     <div className='p-4 flex flex-row-reverse md:flex-row gap-2 items-center mt-8'>
-                        <button className='flex flex-row items-center gap-1 border-accent-10 border-2 text-accent-10 p-2 rounded-sm'><MdAddShoppingCart className='text-accent-10' /> Add to Cart</button>
+                        <button className='flex flex-row items-center gap-1 border-accent-10 border-2 text-accent-10 p-2 rounded-sm'
+                        onClick={() => addToCart()}
+                        ><MdAddShoppingCart className='text-accent-10' /> Add to Cart</button>
                         <button className='p-2 rounded-sm bg-accent-10 text-white font-medium min-w-30'>Buy Now</button>
 
                         <h3 className='text-text/50 mr-auto md:ml-auto md:mr-0'>Report</h3>
@@ -92,6 +107,9 @@ const ProductDetails = () => {
                                                                         }}/>
 
             {/* TODO: Style the heck out of this */}
+            <Outlet>
+
+            </Outlet>
             <div className='flex flex-row gap-2 ml-auto'>
                 <button className='p-2 rounded-sm border-2 border-accent-10 text-accent-10 font-medium min-w-30' onClick={() => navigate(`/products/${id}/specs`)}>Specs</button>
                 <button className='p-2 rounded-sm border-2 border-accent-10 text-accent-10 font-medium min-w-30' onClick={() => navigate('/products')}>Back</button>
