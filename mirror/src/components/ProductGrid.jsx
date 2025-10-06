@@ -14,7 +14,7 @@ const ProductGrid = ({productData}) => {
     animate={{y: 0, opacity: 1}}
     transition={{ease: 'easeIn'}}
     whileHover={{y: -5, transition: {duration: 0.2}}}
-    onClick={() => navigate(`/products/${index}`)} key={index} className='basis-1/4 md:basis-1/6 sm:basis-1/5 rounded-md text-text bg-main-60 overflow-hidden cursor-pointer shadow-lg'>
+    onClick={() => navigate(`/products/${index}`)} key={index} className='rounded-md text-text bg-main-60 overflow-hidden cursor-pointer shadow-lg'>
       <div className='content-[""] aspect-square bg-main-60-light flex justify-center items-center p-2 shadow-sm'>
         <img className='rounded-xs' src={`${product.imagePath}`}/>
       </div>
@@ -30,7 +30,7 @@ const ProductGrid = ({productData}) => {
 
   
   return (
-    <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 py-4 w-[90vw] mx-auto'>
+    <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 py-4 w-[90vw] mx-auto'>
       {listProduct}
     </div>
   )
