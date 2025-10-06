@@ -5,16 +5,16 @@ import {motion, AnimatePresence} from 'framer-motion'
 
 const SearchBar = () => {
 
+    const [initialLoad, setInitialLoad] = useState(true);
     const [searchParams, setSearchParams] = useSearchParams();
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState('');
     const [hasCategory, setHasCategory] = useState(false);
     const [categoryQuery, setCategoryQuery] = useState("");
     const [hasMinPrice, setHasMinPrice] = useState(false);
-    const [minPriceQuery, setMinPriceQuery] = useState('');
+    const [minPriceQuery, setMinPriceQuery] = useState(0);
     const [hasMaxPrice, setHasMaxPrice] = useState(false);
-    const [maxPriceQuery, setMaxPriceQuery] = useState('');
+    const [maxPriceQuery, setMaxPriceQuery] = useState(0);
     const [sortQuery, setSortQuery] = useState('');
-
     const MotionOutlineSearch = motion.create(MdOutlineSearch);
 
     const buttonVariants = {
@@ -76,13 +76,14 @@ const SearchBar = () => {
         setMinPriceQuery(''); 
         setMaxPriceQuery(''); 
         setSortQuery(''); 
-        setSearchParams({});
         setHasCategory(false);
         setHasMinPrice(false);
         setHasMaxPrice(false);
+
+        applySearchQuery();
     }
 
-    useEffect(() => {applySearchQuery()}, [sortQuery])
+    useEffect(() => {if (initialLoad) {setInitialLoad(false); return;} applySearchQuery()}, [sortQuery])
 
     return (
         <div className='w-[90vw] rounded-xl mx-auto bg-main-60 flex flex-col overflow-hidden gap-4 px-8 py-4 shadow-xs'>
@@ -200,7 +201,7 @@ const SearchBar = () => {
                 </motion.select>
                 
                 {
-                    (searchQuery || categoryQuery || minPriceQuery || maxPriceQuery || sortQuery) ?
+                    (searchQuery || categoryQuery || minPriceQuery || maxPriceQuery || sortQuery || searchParams.size != 0) ?
                     <button 
                     className='font-medium text-text/25 px-4 hover:underline hover:underline-text/25 hover:underline-offset-1 cursor-pointer'
                     onClick={clearSearchQuery}

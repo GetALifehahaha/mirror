@@ -8,14 +8,14 @@ function App() {
     <>
       <Navbar />
       
-        <Routes>
-          <Route path='/products' element={<Product />}/>
-          <Route path='/products/:id' element={<ProductDetails  />}>
-            <Route path='specs' element={<ProductSpecs  />}/>
-          </Route>
-          <Route path='/cart' element={<Cart />}/>
-          <Route path='*' element={<NotFound />}/>
-        </Routes>
+      <Routes>
+        <Route path='/products' element={<Product />}/>
+        <Route path='/products/:id' element={<ProductDetails  />}>
+          <Route path='specs' element={<ProductSpecs  />}/>
+        </Route>
+        <Route path='/cart' element={<Cart />}/>
+        <Route path='*' element={<NotFound />}/>
+      </Routes>
     </>
   )
 }

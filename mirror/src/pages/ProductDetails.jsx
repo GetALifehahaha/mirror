@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
 import ProductData from '../data/ProductData'
 import { MdAdd, MdHorizontalRule, MdAddShoppingCart } from "react-icons/md";
-import { ProductDetailsHeaderCard, ProductDetailsPriceCard, ProductDetailsQuantityCard, ProductDetailsAdditionalInformationCard } from '../components';
+import { ProductDetailsHeaderCard, ProductDetailsPriceCard, ProductDetailsQuantityCard, ProductDetailsAdditionalInformationCard, Breadcrumbs } from '../components';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -48,6 +48,12 @@ const ProductDetails = () => {
         localStorage.setItem("cartData", JSON.stringify(cartData));
     }
 
+    const breadcrumbs = [
+        {name: 'Products', path: `/products`},
+        {name: productDetails.category, path: `/products/?cat=${productDetails.category}`},
+        {name: productDetails.productName, path: `/products/${id}`},
+    ]
+
     useEffect(() => {
         setProductDetails(binarySearch());
     }, []);
@@ -55,6 +61,7 @@ const ProductDetails = () => {
 
     return (
         <div className='w-[90vw] mx-auto flex flex-col gap-4'>
+            <Breadcrumbs initialBreadcrumbs={breadcrumbs}/>
             {/* Hero Section */}
             <div className='bg-white p-2 flex flex-col md:flex-row rounded-md'>
                 <div className='flex-1 flex justify-center items-center '>
