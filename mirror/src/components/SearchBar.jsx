@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 const SearchBar = () => {
 
@@ -11,18 +11,17 @@ const SearchBar = () => {
     const [minQuery, setMinQuery] = useState(0);
     const [hasMaxAmount, setHasMaxAmount] = useState(false);
     const [maxQuery, setMaxQuery] = useState(0);
-    const navigate = useNavigate();
+    const [sortQuery, setSortQuery] = useState('');
 
     const applySearchQuery = () => {
-        let params = [];
+        let params = {}
+        if (searchQuery) params = {...params, q: searchQuery} 
+        if (categoryQuery) params = {...params, cat: categoryQuery} 
+        if (minQuery) params = {...params, min: minQuery} 
+        if (maxQuery) params = {...params, max: maxQuery} 
+        if (sortQuery) params = {...params, sort: sortQuery}
 
-        if (searchQuery) params.push({q: searchQuery});
-            
-        if (categoryQuery) params.push({cat: categoryQuery});
-
-        if (minQuery) params.push({min: minQuery})
-
-        setSearchParams(params)
+        setSearchParams(params);
     }
 
     return (
@@ -51,6 +50,20 @@ const SearchBar = () => {
                     <button onClick={() => {setHasMinAmount(false); setMinQuery(0)}}>X</button>
                 </div> : <button onClick={() => setHasMinAmount(true)}>Min Price</button>    
                 }
+                {hasMaxAmount ? 
+                <div className='flex flex-row gap-2'>
+                    <input type="number" value={maxQuery} onChange={(e) => setMaxQuery(e.target.value)} className='border-b-1 border-text/25 px-2'/>
+                    <button onClick={() => {setHasMaxAmount(false); setMaxQuery(0)}}>X</button>
+                </div> : <button onClick={() => setHasMaxAmount(true)}>Max Price</button>    
+                }
+
+                <select className='ml-auto' onChange={(e) => setSortQuery(e.target.value)}>
+                    <option value=''>Sort</option>
+                    <option value='price'>Price</option>
+                    <option value='rating'>Rating</option>
+                </select>
+
+                <button onClick={() => setSearchParams({})}>Clear</button>
             </div>
             
         </div>
