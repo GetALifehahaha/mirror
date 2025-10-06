@@ -200,7 +200,8 @@ const SearchBar = () => {
                     <option value="rating">Rating</option>
                 </motion.select>
                 
-                {
+                {   
+                // TODO: Fix need for double click
                     (searchQuery || categoryQuery || minPriceQuery || maxPriceQuery || sortQuery || searchParams.size != 0) ?
                     <button 
                     className='font-medium text-text/25 px-4 hover:underline hover:underline-text/25 hover:underline-offset-1 cursor-pointer'
