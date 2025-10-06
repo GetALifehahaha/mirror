@@ -1,13 +1,23 @@
 @import 'tailwindcss';
 
 body{
-    background-color: var(--color-main-60);
+    background-color: var(--color-main-60-dark);
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
 @theme {
-    --color-main-60: #f3f3f3;
+    --color-main-60-light: #fefefe;
+    --color-main-60: #f7f7f7;
+    --color-main-60-dark: #dcdede;
     --color-block-30: #3A4750;
     --color-accent-10: #2185D5;
+    --color-accent-10-dark: #0d66b5;
 
     --color-text: #303841;
 }

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
 import ProductData from '../data/ProductData'
-import { MdAdd } from "react-icons/md";
-import { MdHorizontalRule } from "react-icons/md";
-import { MdAddShoppingCart } from "react-icons/md";
+import { MdAdd, MdHorizontalRule, MdAddShoppingCart } from "react-icons/md";
 import { ProductDetailsHeaderCard, ProductDetailsPriceCard, ProductDetailsQuantityCard, ProductDetailsAdditionalInformationCard } from '../components';
 
 const ProductDetails = () => {
