@@ -3,7 +3,7 @@ import { useParams, useNavigate, Outlet, useLocation } from 'react-router-dom'
 import ProductData from '../data/ProductData'
 import { MdAdd, MdHorizontalRule, MdAddShoppingCart } from "react-icons/md";
 import { ProductDetailsHeaderCard, ProductDetailsPriceCard, ProductDetailsQuantityCard, 
-    ProductDetailsAdditionalInformationCard, Breadcrumbs,  } from '../components';
+    ProductDetailsAdditionalInformationCard, Breadcrumbs  } from '../components';
 import {motion, AnimatePresence} from 'framer-motion'
 
 const ProductDetails = () => {
@@ -157,8 +157,6 @@ const ProductDetails = () => {
                 </button> 
             }
                                                                         
-            
-
             <Outlet>
             </Outlet>
         </div>

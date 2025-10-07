@@ -9,3 +9,4 @@ export {default as ProductDetailsQuantityCard} from './ProductDetailsQuantityCar
 export {default as ProductDetailsAdditionalInformationCard} from './ProductDetailsAdditionalInformationCard'
 export {default as SearchBar} from './SearchBar'
 export {default as Breadcrumbs} from './Breadcrumbs'
+export {default as ConfirmationModal} from './ConfirmationModal'
