@@ -4,7 +4,7 @@ import { MdOutlineCall, MdOutlineEmail } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <div className='flex flex-col mt-20 w-full border-t-2 border-block-30/25'>
+    <div className='flex flex-col mt-40 w-full border-t-2 border-block-30/25'>
         {/* About */}
         <div className='flex flex-row px-8 py-4 justify-evenly gap-8 text-text/75 text-sm font-medium sm:text-md'>
             <div className='flex flex-col md:flex-row gap-4'>

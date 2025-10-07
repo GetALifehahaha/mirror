@@ -47,11 +47,11 @@ const SearchBar = () => {
 
     const buttonVariantsChild = {
         initial : {
-            y: -100,
+            y: 20,
             opacity: 0
         },
         hover : {
-            y: [100, 0],
+            y: 0,
             opacity: 1
         },
         click : {
