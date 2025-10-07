@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate, Outlet } from 'react-router-dom'
+import { useParams, useNavigate, Outlet, useLocation } from 'react-router-dom'
 import ProductData from '../data/ProductData'
-import { MdAdd } from "react-icons/md";
-import { MdHorizontalRule } from "react-icons/md";
-import { MdAddShoppingCart } from "react-icons/md";
-import { ProductDetailsHeaderCard, ProductDetailsPriceCard, ProductDetailsQuantityCard, ProductDetailsAdditionalInformationCard } from '../components';
+import { MdAdd, MdHorizontalRule, MdAddShoppingCart } from "react-icons/md";
+import { ProductDetailsHeaderCard, ProductDetailsPriceCard, ProductDetailsQuantityCard, 
+    ProductDetailsAdditionalInformationCard, Breadcrumbs  } from '../components';
+import {motion, AnimatePresence} from 'framer-motion'
 
 const ProductDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [productDetails, setProductDetails] = useState({});
+
+    const MotionAddShopCart = motion.create(MdAddShoppingCart);
+
+    const location = useLocation();
+    const isInSpecs = location.pathname.includes('/specs')
 
     const [quantity, setQuantity] = useState(1);
 
@@ -19,6 +24,28 @@ const ProductDetails = () => {
 
         if (method == 'increase') (quantity + 1 == productDetails.available + 1) ? null : setQuantity(quantity + 1);
             else if (method == 'decrease') (quantity - 1 == 0) ? null : setQuantity(quantity - 1);
+    }
+
+    const buttonVariants = {
+        hover: {
+            backgroundColor: 'var(--color-accent-10)',
+            color: 'var(--color-main-60-light)',
+        }
+    }
+
+    const buttonIconVariants = {
+        initial: {
+            y: 5,
+            opacity: 0
+        },
+        hover: {
+            y: 0,
+            opacity: 1
+        },
+        exit: {
+            y: -5,
+            opacity: 0
+        }
     }
 
     const binarySearch = () => {
@@ -45,10 +72,14 @@ const ProductDetails = () => {
             amount: quantity,
         })
 
-        console.log(cartData)
-
         localStorage.setItem("cartData", JSON.stringify(cartData));
     }
+
+    const breadcrumbs = [
+        {name: 'Products', path: `/products`},
+        {name: productDetails.category, path: `/products/?cat=${productDetails.category}`},
+        {name: productDetails.productName, path: `/products/${id}`},
+    ]
 
     useEffect(() => {
         setProductDetails(binarySearch());
@@ -57,63 +88,77 @@ const ProductDetails = () => {
 
     return (
         <div className='w-[90vw] mx-auto flex flex-col gap-4'>
+            <Breadcrumbs initialBreadcrumbs={breadcrumbs}/>
             {/* Hero Section */}
-            <div className='bg-white p-2 flex flex-col md:flex-row rounded-md'>
-                <div className='flex-1 flex justify-center items-center '>
+            <div className='bg-main-60 p-4 gap-4 flex flex-col md:flex-row rounded-md'>
+                {/* Image */}
+                <div className='flex-1 flex justify-center items-center bg-main-60-light shadow-md rounded-sm overflow-hidden'>
                     <img src={`${productDetails.imagePath}`} className='rounded-md max-h-[400px] object-contain'/>
                 </div>
 
-                <div className='flex-1'>
+                <div className='flex-1 flex flex-col justify-between'>
                     {/* Header */}
-                    {/* TODO: Turn to header card */}
                     <ProductDetailsHeaderCard productDetails={{productName: productDetails.productName, 
                                                                 rating: productDetails.rating,
                                                                 ratingCount: productDetails.ratingCount,
                                                                 sold: productDetails.sold}} />
 
                     {/* Price */}
-                    {/* TODO: Turn to price card */}
-
                     <ProductDetailsPriceCard productDetails={{productPrice: productDetails.productPrice}} />
 
                     {/* Quantity */}
-                    {/* TODO: Turn to quantity card */}
                     <ProductDetailsQuantityCard productDetails={{available: productDetails.available}} />
 
-                    <div className='w-min flex flex-row gap-2 p-4 items-center'>
+                    <div className='w-fit flex flex-row gap-2 p-4 items-center'>
                         <h3 className='text-md text-text/50 mr-10'>Quantity</h3>
-                        <button onClick={() => handleSetQuantity('decrease')} className='aspect-square w-10 bg-text/10 rounded-sm flex justify-center items-center cursor-pointer'><MdHorizontalRule /></button>
-                        <input className='aspect-square w-10 bg-text/10 rounded-sm flex justify-center items-center cursor-pointer text-center' value={quantity} onChange={(e) => setQuantity(e.target.value)} min={1} max={productDetails.available}/>
-                        <button onClick={() => handleSetQuantity('increase')} className='aspect-square w-10 bg-text/10 rounded-sm flex justify-center items-center cursor-pointer'><MdAdd /></button>
+                        <button onClick={() => handleSetQuantity('decrease')} className='aspect-square w-10 bg-main-60-light shadow-sm rounded-sm flex justify-center items-center cursor-pointer hover:bg-main-60-dark'><MdHorizontalRule /></button>
+                        <input className='aspect-square w-10 bg-main-60-light shadow-sm rounded-sm flex justify-center items-center cursor-pointer text-center hover:bg-main-60-dark' value={quantity} onChange={(e) => setQuantity(e.target.value)} min={1} max={productDetails.available}/>
+                        <button onClick={() => handleSetQuantity('increase')} className='aspect-square w-10 bg-main-60-light shadow-sm rounded-sm flex justify-center items-center cursor-pointer hover:bg-main-60-dark'><MdAdd /></button>
                     </div>
 
                     {/* Options */}
-                    {/* TODO: Turn to price card */}
-                    <div className='p-4 flex flex-row-reverse md:flex-row gap-2 items-center mt-8'>
-                        <button className='flex flex-row items-center gap-1 border-accent-10 border-2 text-accent-10 p-2 rounded-sm'
+                    <motion.div 
+                    className='flex ml-auto gap-2 items-center'>
+                        {/* Add to Cart */}
+                        <motion.button 
+                        className=' flex flex-row items-center gap-2 border-accent-10 border-2 text-accent-10 px-4 py-2 rounded-xl cursor-pointer font-semibold'
                         onClick={() => addToCart()}
-                        ><MdAddShoppingCart className='text-accent-10' /> Add to Cart</button>
-                        <button className='p-2 rounded-sm bg-accent-10 text-white font-medium min-w-30'>Buy Now</button>
-
-                        <h3 className='text-text/50 mr-auto md:ml-auto md:mr-0'>Report</h3>
-                    </div>
+                        variants={buttonVariants}
+                        initial='initial'
+                        whileHover='hover'
+                        >
+                            <motion.h1
+                            >
+                                Add to Cart
+                            </motion.h1>
+                            <MotionAddShopCart 
+                            variants={buttonIconVariants} className='text-main-60-light font-semibold'/>
+                        </motion.button>
+                    </motion.div>
                 </div>
             </div>
 
             {/* Additional Information */}
-            {/* TODO: Turn to additional information card */}
             <ProductDetailsAdditionalInformationCard productDetails={{category: productDetails.category,
                                                                         shipsFrom: productDetails.shipsFrom,
                                                                         }}/>
 
-            {/* TODO: Style the heck out of this */}
+            { (isInSpecs) ? 
+                <button 
+                onClick={() => navigate(`/products/${id}`)}
+                className='font-semibold text-sm ml-auto text-text/50 hover:text-text ease-in duration-100 cursor-pointer'>
+                    Hide Specs
+                </button> 
+                :
+                <button 
+                onClick={() => navigate(`/products/${id}/specs`)}
+                className='font-semibold text-sm ml-auto text-text/50 hover:text-text ease-in duration-100 cursor-pointer'>
+                    View Specs
+                </button> 
+            }
+                                                                        
             <Outlet>
-
             </Outlet>
-            <div className='flex flex-row gap-2 ml-auto'>
-                <button className='p-2 rounded-sm border-2 border-accent-10 text-accent-10 font-medium min-w-30' onClick={() => navigate(`/products/${id}/specs`)}>Specs</button>
-                <button className='p-2 rounded-sm border-2 border-accent-10 text-accent-10 font-medium min-w-30' onClick={() => navigate('/products')}>Back</button>
-            </div>
         </div>
     )
 }

@@ -18,7 +18,7 @@ const ProductSpecsCard = ({productSpecs}) => {
     )
 
     return (
-        <div className='flex flex-col gap-2 shadow-sm p-2 rounded-sm'>
+        <div className='flex flex-col gap-2'>
             {listProductSpecs}
         </div>
     )

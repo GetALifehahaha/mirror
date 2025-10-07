@@ -13,9 +13,8 @@ const Navbar = () => {
 
   return (
     <div className='flex flex-row justify-between px-8 py-4'>
-      <span className='flex items-center '>
-        <MdDataset />
-        <h5>Mirror</h5>
+      <span className='flex items-center'>
+        <h5 className='font-medium tracking-tight'>Mirror</h5>
       </span>
 
         <div className='flex flex-row gap-4 items-center'>

@@ -20,14 +20,10 @@ const ProductSpecs = () => {
 
 
     return (
-        <div className='w-[90vw] rounded-sm bg-white p-4 mx-auto flex flex-col gap-4'>
+        <div className='w-[90vw] rounded-sm bg-main-60 p-2 mx-auto mb-20     flex flex-col gap-4'>
             <h3 className='text-text/25 font-semibold text-sm'>Specification</h3>
             <ProductDetailsCard productDetails={productDetails}/>
             <ProductSpecsCard productSpecs={productSpecs} />
-
-            <div className='flex flex-row gap-2 ml-auto'>
-                <button className='p-2 rounded-sm border-2 border-accent-10 text-accent-10 font-medium min-w-30' onClick={() => navigate(`/products/${id}`)}>Back</button>
-            </div>
         </div>
     )
 }
