@@ -118,7 +118,7 @@ const ProductDetails = () => {
 
                     {/* Options */}
                     <motion.div 
-                    className='p-4 flex flex-row-reverse md:flex-row gap-2 items-center'>
+                    className='flex ml-auto gap-2 items-center'>
                         {/* Add to Cart */}
                         <motion.button 
                         className=' flex flex-row items-center gap-2 border-accent-10 border-2 text-accent-10 px-4 py-2 rounded-xl cursor-pointer font-semibold'
@@ -134,10 +134,6 @@ const ProductDetails = () => {
                             <MotionAddShopCart 
                             variants={buttonIconVariants} className='text-main-60-light font-semibold'/>
                         </motion.button>
-
-                        <motion.button className='p-2 rounded-xl bg-accent-10 text-white min-w-30 font-semibold cursor-pointer'>Buy Now</motion.button>
-
-                        <h3 className='text-text/50 mr-auto md:ml-auto md:mr-0'>Report</h3>
                     </motion.div>
                 </div>
             </div>
