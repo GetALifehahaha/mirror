@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import ProductData from '../data/ProductData'
 import { MdHorizontalRule, MdAdd, MdAir } from 'react-icons/md'
 import {motion, AnimatePresence} from 'framer-motion'
-import { ConfirmationModal } from '../components'
+import { ConfirmationModal, NotificationPopup } from '../components'
 
 const Cart = () => {
 
@@ -12,9 +12,11 @@ const Cart = () => {
   const [discount, setDiscount] = useState(0);
   const [netTotal, setNetTotal] = useState(0);
   const [removeProductId, setRemoveProductId] = useState(-1);
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   const [isExpandedCheckout, setIsExpandedCheckout] = useState(false);
   const [isRemoveModalShown, setRemoveIsModalShown] = useState(false);
+  const [isNotificationPopupShown, setIsNotificationPopupShown] = useState(false);
 
   const [rerender, setRerender] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
@@ -91,6 +93,8 @@ const Cart = () => {
     }
 
     setRemoveProductId(-1);
+
+    handleNotificationPopup("Item removed from cart.");
   }
 
   const removeFromCheckout = (id) => {
@@ -127,17 +131,27 @@ const Cart = () => {
   } 
 
   const handleBuyProducts = () => {
-    console.log("U paid " + netTotal)
+    handleNotificationPopup("Transaction Successful");
   }
-
+  
   const handleRemoveCartProduct = (accept) => {
     setRemoveIsModalShown(false);
     
     removeFromCart(accept);
   }
 
+  const handleNotificationPopup = (message) => {
+    setNotificationMessage(message);
+
+    setIsNotificationPopupShown(true);
+
+    setTimeout(() => {
+      setIsNotificationPopupShown(false);
+    },  3000);
+  }
+
   return (
-    <div className='w-[90vw] rounded-md bg-main-60 mx-auto p-4 flex flex-row justify-between gap-2 max-h-[60vh] md:max-h-[80vh]'>
+    <div className='w-[90vw] rounded-md bg-main-60 mx-auto p-4 flex flex-row justify-between gap-2 min-h-[60vh] md:max-h-[80vh]'>
       {/* Cart */}
       <div className='flex flex-col px-4 flex-1 gap-4 overflow-y-scroll scrollbar'>
         {listCartProducts}
@@ -161,11 +175,6 @@ const Cart = () => {
             <AnimatePresence>
             {(isExpandedCheckout || width >= 768) && (
               <motion.div
-                key="expandedCheckout"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1 , x: 0}}
-                exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.2, delay: 0.2 }}
                 className='flex flex-col h-full'
               >
                 <div className='flex flex-row font-medium text-text/50'>
@@ -220,6 +229,12 @@ const Cart = () => {
         {isRemoveModalShown &&
           <ConfirmationModal 
           message={"Are you sure you want to remove this product from your cart?"} onChoiceClick={handleRemoveCartProduct} />
+        }
+        </AnimatePresence>
+
+        <AnimatePresence>
+        {isNotificationPopupShown && 
+          <NotificationPopup message={notificationMessage} />
         }
         </AnimatePresence>
     </div>

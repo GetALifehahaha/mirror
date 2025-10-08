@@ -188,7 +188,7 @@ const SearchBar = () => {
                     animate='show'
                     exit='exit'
                     variants={inputVariants}>
-                        <input type="number" value={maxPriceQuery} onChange={(e) => setMaxPriceQuery(e.target.value)} placeholder='Set Max Price'
+                        <input type="number" value={maxPriceQuery} onChange={(e) => setMaxPriceQuery(e.target.value)} placeholder='Max Price'
                         className='bg-main-60-light shadow-md px-4 py-1 rounded-xl focus:outline-none'/>
                         <button onClick={() => {setHasMaxPrice(false); setMaxPriceQuery('')}}
                         className='absolute right-2 top-1/4 text-text/50 font-medium cursor-pointer'><MdClear /></button>

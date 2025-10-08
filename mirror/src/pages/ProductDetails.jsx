@@ -3,13 +3,15 @@ import { useParams, useNavigate, Outlet, useLocation } from 'react-router-dom'
 import ProductData from '../data/ProductData'
 import { MdAdd, MdHorizontalRule, MdAddShoppingCart } from "react-icons/md";
 import { ProductDetailsHeaderCard, ProductDetailsPriceCard, ProductDetailsQuantityCard, 
-    ProductDetailsAdditionalInformationCard, Breadcrumbs  } from '../components';
+    ProductDetailsAdditionalInformationCard, Breadcrumbs, NotificationPopup  } from '../components';
 import {motion, AnimatePresence} from 'framer-motion'
 
 const ProductDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [productDetails, setProductDetails] = useState({});
+    const [popupMessage, setPopupMessage] = useState("");
+    const [isNotificationPopupShown, setIsNotificationPopupShown] = useState(false);
 
     const MotionAddShopCart = motion.create(MdAddShoppingCart);
 
@@ -73,6 +75,8 @@ const ProductDetails = () => {
         })
 
         localStorage.setItem("cartData", JSON.stringify(cartData));
+
+        handleShowPopup("Item added to cart!")
     }
 
     const breadcrumbs = [
@@ -84,6 +88,16 @@ const ProductDetails = () => {
     useEffect(() => {
         setProductDetails(binarySearch());
     }, []);
+
+    const handleShowPopup = (message) => {
+        setPopupMessage(message);
+
+        setIsNotificationPopupShown(true);
+
+        setTimeout(() => {
+            setIsNotificationPopupShown(false);
+        }, 3000)
+    };
 
 
     return (
@@ -159,6 +173,12 @@ const ProductDetails = () => {
                                                                         
             <Outlet>
             </Outlet>
+
+            <AnimatePresence>
+            { isNotificationPopupShown && 
+                    <NotificationPopup message={popupMessage} />
+                }
+            </AnimatePresence>
         </div>
     )
 }

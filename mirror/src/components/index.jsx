@@ -10,3 +10,4 @@ export {default as ProductDetailsAdditionalInformationCard} from './ProductDetai
 export {default as SearchBar} from './SearchBar'
 export {default as Breadcrumbs} from './Breadcrumbs'
 export {default as ConfirmationModal} from './ConfirmationModal'
+export {default as NotificationPopup} from './NotificationPopup'
