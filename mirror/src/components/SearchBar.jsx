@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { MdOutlineSearch, MdClear } from "react-icons/md";
 import {motion, AnimatePresence} from 'framer-motion'
 
 const SearchBar = () => {
 
-    const [initialLoad, setInitialLoad] = useState(true);
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchQuery, setSearchQuery] = useState('');
     const [hasCategory, setHasCategory] = useState(false);
@@ -15,9 +14,7 @@ const SearchBar = () => {
     const [hasMaxPrice, setHasMaxPrice] = useState(false);
     const [maxPriceQuery, setMaxPriceQuery] = useState('');
     const [sortQuery, setSortQuery] = useState('');
-    const MotionOutlineSearch = motion.create(MdOutlineSearch);
-    const [width, setWidth] = useState(window.innerWidth);
-    
+    const MotionOutlineSearch = motion.create(MdOutlineSearch);    
 
     const buttonVariants = {
         hover: {
@@ -61,7 +58,15 @@ const SearchBar = () => {
         }
     }
 
-    const applySearchQuery = () => {
+    const detectSearchParams = () => {
+        const category = searchParams.get("cat") || false;
+
+        if (category) {setCategoryQuery(category);  setHasCategory(true);}
+    }
+
+    const applySearchQuery = (clear) => {
+        if (clear) {setSearchParams({}); return;}
+
         let params = {}
         if (searchQuery) params = {...params, q: searchQuery} 
         if (categoryQuery) params = {...params, cat: categoryQuery} 
@@ -82,20 +87,11 @@ const SearchBar = () => {
         setHasMinPrice(false);
         setHasMaxPrice(false);
 
-        applySearchQuery();
+        applySearchQuery(true);
     }
 
-
-    useEffect(() => {if (initialLoad) {setInitialLoad(false); return;} applySearchQuery()}, [sortQuery]);
-
-    useEffect(() => {
-        const handleResize = () => setWidth(window.innerWidth);
-        window.addEventListener("resize", handleResize);
-    
-        return () => window.removeEventListener("resize", handleResize);
-      }, []);
-
-    useEffect(() => {applySearchQuery()}, [searchQuery, categoryQuery, minPriceQuery, maxPriceQuery, sortQuery])
+    useEffect(() => {applySearchQuery(false)}, [categoryQuery, minPriceQuery, maxPriceQuery, sortQuery])
+    useEffect(() => {detectSearchParams();}, [])
 
     return (
         <div className='w-[90vw] rounded-xl mx-auto bg-main-60 flex flex-col overflow-hidden gap-4 px-8 py-4 shadow-xs'>
@@ -114,7 +110,7 @@ const SearchBar = () => {
                 initial="initial"   
                 whileHover="hover"
                 whileTap="click"
-                onClick={applySearchQuery}
+                onClick={() => applySearchQuery(false)}
                 className='rounded-full bg-main-60-light shadow-md px-4 py-1 
                           text-accent-10 font-semibold flex flex-row justify-center 
                             items-center gap-4 basis-1/8 cursor-pointer'
