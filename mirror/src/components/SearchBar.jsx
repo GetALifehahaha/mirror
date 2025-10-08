@@ -100,7 +100,7 @@ const SearchBar = () => {
     return (
         <div className='w-[90vw] rounded-xl mx-auto bg-main-60 flex flex-col overflow-hidden gap-4 px-8 py-4 shadow-xs'>
             {/* Search Input */}
-            <div className="flex flex-row gap-8 text-xs md:text-md">
+            <div className="flex flex-row gap-8 text-xs md:text-base">
                 <input 
                 type="text" 
                 value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
@@ -124,18 +124,19 @@ const SearchBar = () => {
             </div>
 
             {/* Search Parameters */}
-            <div className='flex flex-row flex-wrap gap-2 text-xs md:text-md'>
+            <div className='flex flex-col md:flex-row gap-2 justify-between'>
+            <div className='flex flex-row w-full gap-2 text-xs md:text-base'>
                 <AnimatePresence mode="wait" initial="false">
-                    {hasCategory || width < 768 ? 
+                    {hasCategory ? 
                     <motion.div 
-                    className='relative'
+                    className='relative basis-1/3'
                     layout
                     initial='initial'
                     animate='show'
                     exit='exit'
                     variants={inputVariants}>
                         <input type="text" value={categoryQuery} onChange={(e) => setCategoryQuery(e.target.value)} placeholder='Add Category'
-                        className='bg-main-60-light shadow-md px-4 py-1 rounded-xl focus:outline-none'/>
+                        className='bg-main-60-light shadow-md px-4 py-1 rounded-xl focus:outline-none w-full'/>
                         <button onClick={() => {setHasCategory(false); setCategoryQuery("")}}
                         className='absolute right-2 top-1/4 text-text/50 font-medium cursor-pointer'><MdClear /></button>
                     </motion.div> 
@@ -147,28 +148,28 @@ const SearchBar = () => {
                     animate='show'
                     exit='exit'
                     whileHover='hover'
-                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75'
+                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75 basis-1/3'
                     >Category</motion.button>    
                     }
                 </AnimatePresence>
 
                 <AnimatePresence mode="wait" initial="false">
-                    {hasMinPrice || width < 768? 
+                    {hasMinPrice ? 
                     <motion.div 
-                    className='flex flex-row gap-2 relative'
+                    className='relative basis-1/3'
                     layout
                     initial='initial'
                     animate='show'
                     exit='exit'
                     variants={inputVariants}>
                         <input type="number" value={minPriceQuery} onChange={(e) => setMinPriceQuery(e.target.value)} placeholder='Set Min Price'
-                        className='bg-main-60-light shadow-md px-4 py-1 rounded-xl focus:outline-none'/>
+                        className='bg-main-60-light shadow-md px-4 py-1 rounded-xl focus:outline-none w-full'/>
                         <button onClick={() => {setHasMinPrice(false); setMinPriceQuery('')}}
                         className='absolute right-2 top-1/4 text-text/50 font-medium cursor-pointer'><MdClear /></button>
                     </motion.div> 
                     : 
                     <motion.button onClick={() => setHasMinPrice(true)}
-                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75'
+                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75 basis-1/3'
                     layout
                     initial='initial'
                     animate='show'
@@ -180,22 +181,22 @@ const SearchBar = () => {
                 </AnimatePresence>
 
                 <AnimatePresence mode="wait" initial="false">
-                    {hasMaxPrice || width < 768 ? 
+                    {hasMaxPrice ? 
                     <motion.div 
-                    className='flex flex-row gap-2 relative'
+                    className='relative basis-1/3'
                     layout
                     initial='initial'
                     animate='show'
                     exit='exit'
                     variants={inputVariants}>
                         <input type="number" value={maxPriceQuery} onChange={(e) => setMaxPriceQuery(e.target.value)} placeholder='Max Price'
-                        className='bg-main-60-light shadow-md px-4 py-1 rounded-xl focus:outline-none'/>
+                        className='bg-main-60-light shadow-md px-4 py-1 rounded-xl focus:outline-none w-full'/>
                         <button onClick={() => {setHasMaxPrice(false); setMaxPriceQuery('')}}
                         className='absolute right-2 top-1/4 text-text/50 font-medium cursor-pointer'><MdClear /></button>
                     </motion.div> 
                     : 
                     <motion.button onClick={() => setHasMaxPrice(true)}
-                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75'
+                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75 basis-1/3'
                     layout
                     initial='initial'
                     animate='show'
@@ -205,12 +206,15 @@ const SearchBar = () => {
                     >Max</motion.button>    
                     }
                 </AnimatePresence>
-
+            </div>
+            
+            {/* Sort Parameters */}
+            <div className='text-xs md:text-base ml-auto'>
                 <motion.select 
                 className='ml-auto rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75'
                 layout 
                 onChange={e => setSortQuery(e.target.value)}>
-                    <option value="" className='mt-2'>Sort</option>
+                    <option value="">Sort</option>
                     <option value="price">Price</option>
                     <option value="rating">Rating</option>
                 </motion.select>
@@ -222,6 +226,7 @@ const SearchBar = () => {
                     onClick={clearSearchQuery}
                     >Clear</button>
                 }
+            </div>
             </div>
             
         </div>
