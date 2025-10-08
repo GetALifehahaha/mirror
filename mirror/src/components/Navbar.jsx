@@ -2,14 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {NavLink} from 'react-router-dom'
 import { MdDataset } from "react-icons/md";
 
-const Navbar = () => {
-
-  const [cartCount, setCartCount] = useState(0);
-
-  useEffect(() => {
-    setCartCount(JSON.parse(localStorage.getItem("cartData")).length);
-  }, []);
-  
+const Navbar = ({cartCount}) => {
 
   return (
     <div className='flex flex-row justify-between px-8 py-4'>

@@ -6,7 +6,7 @@ import { ProductDetailsHeaderCard, ProductDetailsPriceCard, ProductDetailsQuanti
     ProductDetailsAdditionalInformationCard, Breadcrumbs, NotificationPopup  } from '../components';
 import {motion, AnimatePresence} from 'framer-motion'
 
-const ProductDetails = () => {
+const ProductDetails = ({onCartChange}) => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [productDetails, setProductDetails] = useState({});
@@ -75,7 +75,7 @@ const ProductDetails = () => {
         })
 
         localStorage.setItem("cartData", JSON.stringify(cartData));
-
+        onCartChange();
         handleShowPopup("Item added to cart!")
     }
 

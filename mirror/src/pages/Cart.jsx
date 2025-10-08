@@ -5,7 +5,7 @@ import { MdHorizontalRule, MdAdd, MdAir } from 'react-icons/md'
 import {motion, AnimatePresence} from 'framer-motion'
 import { ConfirmationModal, NotificationPopup } from '../components'
 
-const Cart = () => {
+const Cart = ({onCartChange}) => {
 
   const [productsCheckout, setProductsCheckout] = useState([]);
   const [grossTotal, setGrossTotal] = useState(0);
@@ -94,6 +94,7 @@ const Cart = () => {
 
     setRemoveProductId(-1);
 
+    onCartChange();
     handleNotificationPopup("Item removed from cart.");
   }
 
