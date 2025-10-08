@@ -19,7 +19,6 @@ const Cart = ({onCartChange}) => {
   const [isNotificationPopupShown, setIsNotificationPopupShown] = useState(false);
 
   const [rerender, setRerender] = useState(0);
-  const [width, setWidth] = useState(window.innerWidth);
 
   const cartData = JSON.parse(localStorage.getItem("cartData"));
   const productMap = Object.fromEntries(ProductData.map(product => [product.id, product]));
@@ -73,14 +72,6 @@ const Cart = ({onCartChange}) => {
     handleSetNetTotal();
   }, [productsCheckout, grossTotal, discount]);
 
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  
   const removeFromCart = (accept) => {
     if (removeProductId == -1) return;
 
@@ -90,12 +81,11 @@ const Cart = ({onCartChange}) => {
       localStorage.setItem('cartData', JSON.stringify(filteredCartData));
   
       setRerender(rerender + 1);
+      onCartChange();
+      handleNotificationPopup("Item removed from cart.");
     }
 
     setRemoveProductId(-1);
-
-    onCartChange();
-    handleNotificationPopup("Item removed from cart.");
   }
 
   const removeFromCheckout = (id) => {
@@ -164,19 +154,16 @@ const Cart = ({onCartChange}) => {
                 bg-main-60 bottom-0 left-0 w-full rounded-t-lg outline-1 outline-text/25 py-4 ${(isExpandedCheckout) ? 'h-[80vh]' : 'h-fit'}
                   md:relative md:overflow-auto md:h-auto md:outline-none`}>
         <h5 className='text-text/50 text-md font-medium mb-8'>Checkout</h5>
-        { (width < 768 ) &&
+
             <button 
             onClick={() => setIsExpandedCheckout(!isExpandedCheckout)}
-            className={`absolute left-1/2 px-4 py-1 rounded-full bg-accent-10 font-medium text-main-60-light -top-4 -translate-x-1/2`}>
+            className={`block md:hidden absolute left-1/2 px-4 hover:px-6 duration-100 ease-in py-1 rounded-full bg-accent-10 font-medium text-main-60-light -top-4 -translate-x-1/2 cursor-pointer`}>
               { (isExpandedCheckout) ? 'Retract' : 'Expand'}
             </button>
 
-        }
-        { (isExpandedCheckout || width >= 768) &&
             <AnimatePresence>
-            {(isExpandedCheckout || width >= 768) && (
               <motion.div
-                className='flex flex-col h-full'
+              className={`flex flex-col h-full ${(isExpandedCheckout) ? "flex" : "hidden md:flex"}`}
               >
                 <div className='flex flex-row font-medium text-text/50'>
                   <h3 className='basis-1/3'>Item</h3>
@@ -209,9 +196,7 @@ const Cart = ({onCartChange}) => {
                 </div>
                 
               </motion.div>
-            )}
             </AnimatePresence>
-        }
         
 
         <div className='mt-2 flex flex-row justify-between items-center gap-2 bg-accent-10 rounded-lg shadow-md p-4'>

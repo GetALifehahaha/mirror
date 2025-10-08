@@ -120,8 +120,8 @@ const SearchBar = () => {
             </div>
 
             {/* Search Parameters */}
-            <div className='flex flex-col md:flex-row gap-2 justify-between'>
-            <div className='flex flex-row w-full gap-2 text-xs md:text-base'>
+            <div className='flex flex-col md:flex-row gap-2'>
+            <div className='flex flex-row-reverse md:flex-row w-full gap-2 text-xs md:text-base justify-start'>
                 <AnimatePresence mode="wait" initial="false">
                     {hasCategory ? 
                     <motion.div 
@@ -144,7 +144,7 @@ const SearchBar = () => {
                     animate='show'
                     exit='exit'
                     whileHover='hover'
-                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75 basis-1/3 md:basis-auto'
+                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75'
                     >Category</motion.button>    
                     }
                 </AnimatePresence>
@@ -165,7 +165,7 @@ const SearchBar = () => {
                     </motion.div> 
                     : 
                     <motion.button onClick={() => setHasMinPrice(true)}
-                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75 basis-1/3 md:basis-auto'
+                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75'
                     layout
                     initial='initial'
                     animate='show'
@@ -192,7 +192,7 @@ const SearchBar = () => {
                     </motion.div> 
                     : 
                     <motion.button onClick={() => setHasMaxPrice(true)}
-                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75 basis-1/3 md:basis-auto'
+                    className='rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75'
                     layout
                     initial='initial'
                     animate='show'
