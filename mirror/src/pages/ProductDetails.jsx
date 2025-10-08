@@ -67,14 +67,23 @@ const ProductDetails = ({onCartChange}) => {
     }
 
     const addToCart = () => {
-        const cartData = JSON.parse(localStorage.getItem("cartData"));
+        const cartData = JSON.parse(localStorage.getItem("cartData")) || [];
 
-        cartData.push({
-            id,
-            amount: quantity,
-        })
+        let isProductInCart = false;
 
-        localStorage.setItem("cartData", JSON.stringify(cartData));
+        const updatedCartData = cartData.map(product => {
+            if (product.id === id) {
+            isProductInCart = true;
+            return { ...product, amount: product.amount + quantity };
+            }
+            return product;
+        });
+
+        if (!isProductInCart) {
+            updatedCartData.push({ id, amount: quantity });
+        }
+
+        localStorage.setItem("cartData", JSON.stringify(updatedCartData));
         onCartChange();
         handleShowPopup("Item added to cart!")
     }
