@@ -10,6 +10,7 @@ const Cart = ({onCartChange}) => {
   const [productsCheckout, setProductsCheckout] = useState([]);
   const [grossTotal, setGrossTotal] = useState(0);
   const [discount, setDiscount] = useState(0);
+  const [discountId, setDiscountId] = useState(-1);
   const [netTotal, setNetTotal] = useState(0);
   const [removeProductId, setRemoveProductId] = useState(-1);
   const [notificationMessage, setNotificationMessage] = useState("");
@@ -20,7 +21,7 @@ const Cart = ({onCartChange}) => {
 
   const [rerender, setRerender] = useState(0);
 
-  const cartData = JSON.parse(localStorage.getItem("cartData"));
+  const cartData = JSON.parse(localStorage.getItem("cartData")) || [];
   const productMap = Object.fromEntries(ProductData.map(product => [product.id, product]));
   const cartProducts = cartData.map(item => ({...item, ...productMap[item.id]}));
 
@@ -28,11 +29,11 @@ const Cart = ({onCartChange}) => {
   
   const navigate = useNavigate();
 
-  const listDiscount = discountData.map((discount, index) => <option key={index} value={discount.discount}>{discount.discount * 100} %</option>)
+  const listDiscount = discountData.map((discount, index) => <option key={index} data-id={index} value={discount.discount}>{discount.discount * 100} %</option>)
 
-  const formatNumber = (number) => (number % 1 === 0 ? number + '.00' : number);
+  const formatNumber = (number) => {return Number(number || 0).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})};
 
-  const listCartProducts = cartProducts.map((product, index) => 
+  const listCartProducts = cartProducts.map((product) => 
     <div key={product.id} className='flex flex-row gap-4 p-4 items-center bg-main-60-light border-text/10 rounded-md shadow-sm'>
       <div className='flex flex-col gap-4'>
         <MdAdd className='text-accent-10-dark cursor-pointer' onClick={() => handleProductsForCheckout(product)} />
@@ -44,14 +45,14 @@ const Cart = ({onCartChange}) => {
         <h5 onClick={() => navigate(`/products/${product.id}`)} className='text-right md:text-left text-lg md:text-xl font-semibold cursor-pointer'>{product.productName}</h5>
         
         <div className='flex flex-row gap-2 ml-auto'>
-          <h5 className='text-text font-semibold' >PHP {formatNumber(product.productPrice)} </h5>
+          <h5 className='text-text font-semibold' >₱ {formatNumber(product.productPrice)} </h5>
           <h5 className='text-text/75'>x{product.amount} </h5>
         </div>
 
         <div className='flex flex-row gap-2 items-center ml-auto'>
           <h3 className='text-text/50 font-medium'>Total</h3>
           <h3 className='text-accent-10 font-bold text-lg rounded-md'>
-            PHP {formatNumber(product.productPrice * product.amount)}
+            ₱  {formatNumber(product.productPrice * product.amount)}
           </h3>
         </div>
       </div>
@@ -122,7 +123,24 @@ const Cart = ({onCartChange}) => {
   } 
 
   const handleBuyProducts = () => {
-    handleNotificationPopup("Transaction Successful");
+    if (productsCheckout.length === 0) {handleNotificationPopup("There are no items in the checkout!"); return}
+    
+    const productsToBeRemoved = new Set(productsCheckout.map(item => item.id))
+    
+    const remainingProductsInCart = cartProducts.filter(product => !productsToBeRemoved.has(product.id))
+    
+    localStorage.setItem("cartData", JSON.stringify(remainingProductsInCart));
+    
+    setProductsCheckout([]);
+    
+    if (discountId != -1) {
+      const newDiscountData = discountData.filter((discount, index) => index != discountId);
+
+      localStorage.setItem("discountData", JSON.stringify(newDiscountData));
+    }
+    
+    handleNotificationPopup("Transaction Complete")
+    onCartChange();
   }
   
   const handleRemoveCartProduct = (accept) => {
@@ -142,7 +160,7 @@ const Cart = ({onCartChange}) => {
   }
 
   return (
-    <div className='w-[90vw] rounded-md bg-main-60 mx-auto p-4 flex flex-row justify-between gap-2 min-h-[60vh] md:max-h-[80vh]'>
+    <div className='w-[90vw] rounded-md bg-main-60 mx-auto p-4 flex flex-row justify-between gap-2 h-[60vh] md:h-[80vh]'>
       {/* Cart */}
       <div className='flex flex-col px-4 flex-1 gap-4 overflow-y-scroll scrollbar'>
         {listCartProducts}
@@ -180,8 +198,12 @@ const Cart = ({onCartChange}) => {
                     <h3 className='text-left font-semibold text-text/50'>Discount</h3>
 
                     <h5 className='text-right font-bold text-md px-4 py-1 rounded-md shadow-sm bg-main-60-light'>
-                      <select onChange={(e) => setDiscount(e.target.value)}>
-                        <option key="default" value={0}>Discount</option>
+                      <select onChange={(e) => {
+                        const selectedOption = e.target.selectedOptions[0];
+                        setDiscount(selectedOption.value);
+                        setDiscountId(selectedOption.getAttribute("data-id"));
+                        }}>
+                        <option key="default" data-id={-1} value={0}>Discount</option>
                         {listDiscount}
                       </select>
                     </h5>
@@ -203,11 +225,11 @@ const Cart = ({onCartChange}) => {
           <h3 className='font-semibold text-main-60-dark'>Net Total</h3>
 
           <h5 className=' text-main-60-light font-bold text-2xl'>
-            PHP {formatNumber(netTotal)}
+            ₱ {formatNumber(netTotal)}
           </h5>
         </div>
         <button 
-        className='my-2 mx-auto py-1 px-8 w-fit rounded-full bg-accent-10 text-white font-semibold text-lg'
+        className='my-2 mx-auto py-1 px-8 w-fit rounded-full bg-accent-10 text-white font-semibold text-lg cursor-pointer'
         onClick={handleBuyProducts}>Proceed to Checkout</button>
         </motion.div>
         

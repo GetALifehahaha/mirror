@@ -23,7 +23,7 @@ const ProductGrid = ({productData}) => {
           <h1 className='truncate font-semibold tracking-wide'>{product.productName}</h1>
           <span className='font-medium tracking-wide flex flex-row gap-1 items-center'><h1>{product.rating}</h1> <FaRegStar /></span>
         </div>
-        <h5 className='text-accent-10 font-bold px-2 py-1 rounded-md bg-main-60-light shadow-sm'>PHP {product.productPrice % 1 === 0 ? product.productPrice + '.00' : product.productPrice}</h5>
+        <h5 className='text-accent-10 font-bold px-2 py-1 rounded-md bg-main-60-light shadow-sm'>₱ {Number(product.productPrice || 0).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h5>
       </div>
     </motion.div>
   )
