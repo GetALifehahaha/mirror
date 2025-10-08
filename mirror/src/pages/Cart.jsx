@@ -75,7 +75,6 @@ const Cart = () => {
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
 
-    // Cleanup to prevent memory leaks
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 

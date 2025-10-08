@@ -11,11 +11,13 @@ const SearchBar = () => {
     const [hasCategory, setHasCategory] = useState(false);
     const [categoryQuery, setCategoryQuery] = useState("");
     const [hasMinPrice, setHasMinPrice] = useState(false);
-    const [minPriceQuery, setMinPriceQuery] = useState(0);
+    const [minPriceQuery, setMinPriceQuery] = useState('');
     const [hasMaxPrice, setHasMaxPrice] = useState(false);
-    const [maxPriceQuery, setMaxPriceQuery] = useState(0);
+    const [maxPriceQuery, setMaxPriceQuery] = useState('');
     const [sortQuery, setSortQuery] = useState('');
     const MotionOutlineSearch = motion.create(MdOutlineSearch);
+    const [width, setWidth] = useState(window.innerWidth);
+    
 
     const buttonVariants = {
         hover: {
@@ -83,11 +85,22 @@ const SearchBar = () => {
         applySearchQuery();
     }
 
-    useEffect(() => {if (initialLoad) {setInitialLoad(false); return;} applySearchQuery()}, [sortQuery])
+
+    useEffect(() => {if (initialLoad) {setInitialLoad(false); return;} applySearchQuery()}, [sortQuery]);
+
+    useEffect(() => {
+        const handleResize = () => setWidth(window.innerWidth);
+        window.addEventListener("resize", handleResize);
+    
+        return () => window.removeEventListener("resize", handleResize);
+      }, []);
+
+    useEffect(() => {applySearchQuery()}, [searchQuery, categoryQuery, minPriceQuery, maxPriceQuery, sortQuery])
 
     return (
         <div className='w-[90vw] rounded-xl mx-auto bg-main-60 flex flex-col overflow-hidden gap-4 px-8 py-4 shadow-xs'>
-            <div className="flex flex-row gap-8">
+            {/* Search Input */}
+            <div className="flex flex-row gap-8 text-xs md:text-md">
                 <input 
                 type="text" 
                 value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
@@ -109,17 +122,19 @@ const SearchBar = () => {
                 <MotionOutlineSearch variants={buttonVariantsChild}/> 
                 </motion.button>
             </div>
-            <div className='flex flex-row gap-2'>
+
+            {/* Search Parameters */}
+            <div className='flex flex-row flex-wrap gap-2 text-xs md:text-md'>
                 <AnimatePresence mode="wait" initial="false">
-                    {hasCategory ? 
+                    {hasCategory || width < 768 ? 
                     <motion.div 
-                    className='flex flex-row gap-2 relative'
+                    className='relative'
                     layout
                     initial='initial'
                     animate='show'
                     exit='exit'
                     variants={inputVariants}>
-                        <input type="text" value={categoryQuery} onChange={(e) => setCategoryQuery(e.target.value)} 
+                        <input type="text" value={categoryQuery} onChange={(e) => setCategoryQuery(e.target.value)} placeholder='Add Category'
                         className='bg-main-60-light shadow-md px-4 py-1 rounded-xl focus:outline-none'/>
                         <button onClick={() => {setHasCategory(false); setCategoryQuery("")}}
                         className='absolute right-2 top-1/4 text-text/50 font-medium cursor-pointer'><MdClear /></button>
@@ -138,7 +153,7 @@ const SearchBar = () => {
                 </AnimatePresence>
 
                 <AnimatePresence mode="wait" initial="false">
-                    {hasMinPrice ? 
+                    {hasMinPrice || width < 768? 
                     <motion.div 
                     className='flex flex-row gap-2 relative'
                     layout
@@ -146,7 +161,7 @@ const SearchBar = () => {
                     animate='show'
                     exit='exit'
                     variants={inputVariants}>
-                        <input type="number" value={minPriceQuery} onChange={(e) => setMinPriceQuery(e.target.value)} 
+                        <input type="number" value={minPriceQuery} onChange={(e) => setMinPriceQuery(e.target.value)} placeholder='Set Min Price'
                         className='bg-main-60-light shadow-md px-4 py-1 rounded-xl focus:outline-none'/>
                         <button onClick={() => {setHasMinPrice(false); setMinPriceQuery('')}}
                         className='absolute right-2 top-1/4 text-text/50 font-medium cursor-pointer'><MdClear /></button>
@@ -165,7 +180,7 @@ const SearchBar = () => {
                 </AnimatePresence>
 
                 <AnimatePresence mode="wait" initial="false">
-                    {hasMaxPrice ? 
+                    {hasMaxPrice || width < 768 ? 
                     <motion.div 
                     className='flex flex-row gap-2 relative'
                     layout
@@ -173,7 +188,7 @@ const SearchBar = () => {
                     animate='show'
                     exit='exit'
                     variants={inputVariants}>
-                        <input type="number" value={maxPriceQuery} onChange={(e) => setMaxPriceQuery(e.target.value)} 
+                        <input type="number" value={maxPriceQuery} onChange={(e) => setMaxPriceQuery(e.target.value)} placeholder='Set Max Price'
                         className='bg-main-60-light shadow-md px-4 py-1 rounded-xl focus:outline-none'/>
                         <button onClick={() => {setHasMaxPrice(false); setMaxPriceQuery('')}}
                         className='absolute right-2 top-1/4 text-text/50 font-medium cursor-pointer'><MdClear /></button>
@@ -201,14 +216,11 @@ const SearchBar = () => {
                 </motion.select>
                 
                 {   
-                // TODO: Fix need for double click
-                    (searchQuery || categoryQuery || minPriceQuery || maxPriceQuery || sortQuery || searchParams.size != 0) ?
+                    (searchQuery || categoryQuery || minPriceQuery || maxPriceQuery || sortQuery || searchParams.size != 0) &&
                     <button 
-                    className='font-medium text-text/25 px-4 hover:underline hover:underline-text/25 hover:underline-offset-1 cursor-pointer'
+                    className='font-medium text-text/25 px-4 hover:underline hover:underline-text/25 hover:underline-offset-1 cursor-pointer ml-auto' 
                     onClick={clearSearchQuery}
                     >Clear</button>
-                    :
-                    null
                 }
             </div>
             
