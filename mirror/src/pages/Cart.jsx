@@ -8,6 +8,7 @@ import { CheckoutSuccessfulModal, ConfirmationModal, NotificationPopup } from '.
 const Cart = ({onCartChange}) => {
 
   const [productsCheckout, setProductsCheckout] = useState([]);
+  const [checkoutCount, setCheckoutCount] = useState(0);
   const [grossTotal, setGrossTotal] = useState(0);
   const [discount, setDiscount] = useState(0);
   const [discountId, setDiscountId] = useState(-1);
@@ -30,7 +31,7 @@ const Cart = ({onCartChange}) => {
   
   const navigate = useNavigate();
 
-  const listDiscount = discountData.map((discount, index) => <option key={index} data-id={index} value={discount.discount}>{discount.discount * 100} %</option>)
+  const listDiscount = discountData.map((discount, index) => <option key={index} data-id={index} value={discount.discount} className='text-text/50'>{discount.code} {discount.discount * 100} %</option>)
 
   const formatNumber = (number) => {return Number(number || 0).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})};
 
@@ -92,6 +93,7 @@ const Cart = ({onCartChange}) => {
 
   const removeFromCheckout = (id) => {
       setProductsCheckout(productsCheckout.filter(product => product.id != id));
+      setCheckoutCount(checkoutCount - 1);
   }
 
   const handleSetRemoveProductId = (id) => {
@@ -121,6 +123,8 @@ const Cart = ({onCartChange}) => {
 
       return pc;
     });
+
+    setCheckoutCount(checkoutCount + 1)
   } 
 
   const handleBuyProducts = () => {
@@ -132,16 +136,16 @@ const Cart = ({onCartChange}) => {
     
     localStorage.setItem("cartData", JSON.stringify(remainingProductsInCart));
     
-    setProductsCheckout([]);
     
     if (discountId != -1) {
       const newDiscountData = discountData.filter((discount, index) => index != discountId);
-
+      
       localStorage.setItem("discountData", JSON.stringify(newDiscountData));
     }
     
     setIsCheckoutSuccessfulModalShown(true);
     onCartChange();
+    setProductsCheckout([]);
   }
   
   const handleRemoveCartProduct = (accept) => {
@@ -196,7 +200,7 @@ const Cart = ({onCartChange}) => {
               className={`flex flex-col h-full ${(isExpandedCheckout) ? "flex" : "hidden md:flex"}`}
               >
                 <div className='flex flex-row font-medium text-text/50'>
-                  <h3 className='basis-1/3'>Item</h3>
+                  <div className='basis-1/3 flex flex-row gap-2 items-center'>Item <h3 className='text-text'>{checkoutCount}</h3></div>
                   <h3 className='basis-1/3 flex justify-end'>Amount</h3>
                   <h3 className='basis-1/3 flex justify-end'>Price</h3>
                 </div>
@@ -207,7 +211,7 @@ const Cart = ({onCartChange}) => {
 
                 <div className='mt-auto flex flex-row justify-between border-t-2 border-text/25 py-2'>
                   <div className=''>
-                    <h3 className='text-left font-semibold text-text/50'>Discount</h3>
+                    <h3 className='text-left font-semibold text-text/50'>Promo Code</h3>
 
                     <h5 className='text-right font-bold text-md px-4 py-1 rounded-md shadow-sm bg-main-60-light'>
                       <select onChange={(e) => {
@@ -215,7 +219,7 @@ const Cart = ({onCartChange}) => {
                         setDiscount(selectedOption.value);
                         setDiscountId(selectedOption.getAttribute("data-id"));
                         }}>
-                        <option key="default" data-id={-1} value={0}>Discount</option>
+                        <option key="default" data-id={-1} value={0}>Select Code</option>
                         {listDiscount}
                       </select>
                     </h5>
@@ -260,7 +264,7 @@ const Cart = ({onCartChange}) => {
 
         <AnimatePresence>
         {isCheckoutSuccessfulModalShown && 
-          <CheckoutSuccessfulModal totalAmount={netTotal} onCloseCart={() => setIsCheckoutSuccessfulModalShown(false)} />
+          <CheckoutSuccessfulModal totalAmount={formatNumber(netTotal)} onCloseCart={() => setIsCheckoutSuccessfulModalShown(false)} />
         }
         </AnimatePresence>
     </motion.div>

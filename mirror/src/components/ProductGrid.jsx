@@ -14,12 +14,12 @@ const ProductGrid = ({productData}) => {
     animate={{y: 0, opacity: 1}}
     transition={{ease: 'easeIn'}}
     whileHover={{y: -5, transition: {duration: 0.2}}}
-    onClick={() => navigate(`/products/${index}`)} key={index} className='rounded-md text-text bg-main-60 overflow-hidden cursor-pointer shadow-lg'>
+    onClick={() => navigate(`/products/${product.id}`)} key={index} className='rounded-md text-text bg-main-60 overflow-hidden cursor-pointer shadow-lg'>
       <div className='content-[""] aspect-square bg-main-60-light flex justify-center items-center p-2 shadow-sm'>
         <img className='rounded-xs' src={`${product.imagePath}`}/>
       </div>
       <div className='p-2 flex flex-col gap-4'>
-        <div className='flex flex-row px-2 py-1 justify-between'>
+        <div className='flex flex-col px-2 py-1 justify-between'>
           <h1 className='truncate font-semibold tracking-wide'>{product.productName}</h1>
           <span className='font-medium tracking-wide flex flex-row gap-1 items-center'><h1>{product.rating}</h1> <FaRegStar /></span>
         </div>

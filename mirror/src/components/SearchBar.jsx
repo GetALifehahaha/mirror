@@ -96,7 +96,7 @@ const SearchBar = () => {
     return (
         <div className='w-[90vw] rounded-xl mx-auto bg-main-60 flex flex-col overflow-hidden gap-4 px-8 py-4 shadow-xs'>
             {/* Search Input */}
-            <div className="flex flex-row gap-4 md:gap-8 text-xs md:text-base">
+            <div className="flex flex-row gap-4 md:gap-8 text-sm md:text-base">
                 <input 
                 type="text" 
                 value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
@@ -121,7 +121,7 @@ const SearchBar = () => {
 
             {/* Search Parameters */}
             <div className='flex flex-col md:flex-row gap-2'>
-            <div className='flex flex-row-reverse md:flex-row w-full gap-2 text-xs md:text-base justify-start'>
+            <div className='flex flex-row-reverse md:flex-row w-full gap-2 text-sm md:text-base justify-start'>
                 <AnimatePresence mode="wait" initial="false">
                     {hasCategory ? 
                     <motion.div 
@@ -205,7 +205,7 @@ const SearchBar = () => {
             </div>
             
             {/* Sort Parameters */}
-            <div className='text-xs md:text-base ml-auto flex flex-row'>
+            <div className='text-sm md:text-base ml-auto flex flex-row'>
                 <motion.select 
                 className='ml-auto rounded-xl px-4 py-1 bg-main-60-light cursor-pointer shadow-sm text-text/75'
                 layout 

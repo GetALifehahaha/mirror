@@ -6,7 +6,6 @@ const CheckoutSuccessfulModal = ({totalAmount, onCloseCart}) => {
 
     const date = new Date();
     const orderId = `${date.getMonth() + 1}-${date.getDay()}-${date.getFullYear()}-${date.getSeconds()}`
-    const currentDate = `${date.getMonth() + 1}/${date.getDay()}/${date.getFullYear()}`
 
     return ( 
         <motion.div 
@@ -39,7 +38,7 @@ const CheckoutSuccessfulModal = ({totalAmount, onCloseCart}) => {
                     <h5 className='font-semibold text-text/50'>{orderId}</h5>
 
                     <h5 className='text-text/50 mt-4 -mb-2'>Total</h5>
-                    <h1 className='text-accent-10-dark text-4xl font-bold tracking-tight'>₱ {Number(totalAmount || 0).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h1>
+                    <h1 className='text-accent-10-dark text-4xl font-bold tracking-tight'>₱ {totalAmount}</h1>
                 </div>
 
                 <div className='text-center'>
