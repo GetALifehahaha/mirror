@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
-import { Product, NotFound, Cart, ProductDetails, ProductSpecs } from './pages'
+import { Product, NotFound, Cart, ProductDetails, ProductSpecs, About } from './pages'
 import { Navbar } from './components'
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
           <Route path='specs' element={<ProductSpecs  />}/>
         </Route>
         <Route path='/cart' element={<Cart onCartChange={() => setRerender(rerender + 1)}/>}/>
+        <Route path='/about' element={<About />}/>
         <Route path='*' element={<NotFound />}/>
       </Routes>
     </>
