@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import ProductData from '../data/ProductData'
 import { MdHorizontalRule, MdAdd, MdAir } from 'react-icons/md'
 import {motion, AnimatePresence} from 'framer-motion'
-import { ConfirmationModal, NotificationPopup } from '../components'
+import { CheckoutSuccessfulModal, ConfirmationModal, NotificationPopup } from '../components'
 
 const Cart = ({onCartChange}) => {
 
@@ -18,6 +18,7 @@ const Cart = ({onCartChange}) => {
   const [isExpandedCheckout, setIsExpandedCheckout] = useState(false);
   const [isRemoveModalShown, setRemoveIsModalShown] = useState(false);
   const [isNotificationPopupShown, setIsNotificationPopupShown] = useState(false);
+  const [isCheckoutSuccessfulModalShown, setIsCheckoutSuccessfulModalShown] = useState(false);
 
   const [rerender, setRerender] = useState(0);
 
@@ -139,7 +140,7 @@ const Cart = ({onCartChange}) => {
       localStorage.setItem("discountData", JSON.stringify(newDiscountData));
     }
     
-    handleNotificationPopup("Transaction Complete")
+    setIsCheckoutSuccessfulModalShown(true);
     onCartChange();
   }
   
@@ -160,7 +161,18 @@ const Cart = ({onCartChange}) => {
   }
 
   return (
-    <div className='w-[90vw] rounded-md bg-main-60 mx-auto p-4 flex flex-row justify-between gap-2 h-[60vh] md:h-[80vh]'>
+    <motion.div 
+    variants={{
+      initial: {
+        y: 10, opacity: 0
+      },
+      show: {
+        y: 0, opacity: 1
+      },
+    }}
+    initial="initial"
+    animate="show"
+    className='w-[90vw] rounded-md bg-main-60 mx-auto p-4 flex flex-row justify-between gap-2 h-[60vh] md:h-[80vh]'>
       {/* Cart */}
       <div className='flex flex-col px-4 flex-1 gap-4 overflow-y-scroll scrollbar'>
         {listCartProducts}
@@ -245,7 +257,13 @@ const Cart = ({onCartChange}) => {
           <NotificationPopup message={notificationMessage} />
         }
         </AnimatePresence>
-    </div>
+
+        <AnimatePresence>
+        {isCheckoutSuccessfulModalShown && 
+          <CheckoutSuccessfulModal totalAmount={netTotal} onCloseCart={() => setIsCheckoutSuccessfulModalShown(false)} />
+        }
+        </AnimatePresence>
+    </motion.div>
   );
 }
 

@@ -4,7 +4,7 @@ import ProductData from '../data/ProductData'
 import { MdAdd, MdHorizontalRule, MdAddShoppingCart } from "react-icons/md";
 import { ProductDetailsHeaderCard, ProductDetailsPriceCard, ProductDetailsQuantityCard, 
     ProductDetailsAdditionalInformationCard, Breadcrumbs, NotificationPopup  } from '../components';
-import {motion, AnimatePresence} from 'framer-motion'
+import {motion, AnimatePresence, stagger} from 'framer-motion'
 
 const ProductDetails = ({onCartChange}) => {
     const { id } = useParams();
@@ -110,7 +110,20 @@ const ProductDetails = ({onCartChange}) => {
 
 
     return (
-        <div className='w-[90vw] mx-auto flex flex-col gap-4'>
+        <motion.div 
+        variants={{
+            initial: {
+                y: 10,
+                opacity: 0
+            },
+            show: {
+                y: 0,
+                opacity: 1,
+            }
+        }}
+        initial="initial"
+        animate="show"
+        className='w-[90vw] mx-auto flex flex-col gap-4'>
             <Breadcrumbs initialBreadcrumbs={breadcrumbs}/>
             {/* Hero Section */}
             <div className='bg-main-60 p-4 gap-4 flex flex-col md:flex-row rounded-md'>
@@ -188,7 +201,7 @@ const ProductDetails = ({onCartChange}) => {
                     <NotificationPopup message={popupMessage} />
                 }
             </AnimatePresence>
-        </div>
+        </motion.div>
     )
 }
 
