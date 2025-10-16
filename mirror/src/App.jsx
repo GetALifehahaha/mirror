@@ -10,7 +10,15 @@ function App() {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    setCartCount(JSON.parse(localStorage.getItem("cartData")).length);
+    setCartCount(() => {
+      let count = JSON.parse(localStorage.getItem("cartData"));
+
+      if (!count) {
+        return 0;
+      }
+
+      return count.length;
+    });
   }, [rerender]);
 
   return (

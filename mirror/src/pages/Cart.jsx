@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ProductData from '../data/ProductData'
-import { MdHorizontalRule, MdAdd, MdAir } from 'react-icons/md'
+import { MdHorizontalRule, MdAdd  } from 'react-icons/md'
 import {motion, AnimatePresence} from 'framer-motion'
 import { CheckoutSuccessfulModal, ConfirmationModal, NotificationPopup } from '../components'
 
@@ -15,6 +15,7 @@ const Cart = ({onCartChange}) => {
   const [netTotal, setNetTotal] = useState(0);
   const [removeProductId, setRemoveProductId] = useState(-1);
   const [notificationMessage, setNotificationMessage] = useState("");
+  const [totalForDisplay, setTotalForDisplay] = useState(0);
 
   const [isExpandedCheckout, setIsExpandedCheckout] = useState(false);
   const [isRemoveModalShown, setRemoveIsModalShown] = useState(false);
@@ -37,10 +38,7 @@ const Cart = ({onCartChange}) => {
 
   const listCartProducts = cartProducts.map((product) => 
     <div key={product.id} className='flex flex-row gap-4 p-4 items-center bg-main-60-light border-text/10 rounded-md shadow-sm'>
-      <div className='flex flex-col gap-4'>
-        <MdAdd className='text-accent-10-dark cursor-pointer' onClick={() => handleProductsForCheckout(product)} />
         <MdHorizontalRule className='text-red-400 cursor-pointer' onClick={() => handleSetRemoveProductId(product.id)}/>
-      </div>
       <img src={product.imagePath} className='h-18 md:h-24 aspect-square object-contain object-center border-1 rounded-sm border-text/25'/>
 
       <div className='flex flex-col text-sm md:text-md text-text gap-1 md:gap-2 flex-1 px-4'>
@@ -52,12 +50,15 @@ const Cart = ({onCartChange}) => {
         </div>
 
         <div className='flex flex-row gap-2 items-center ml-auto'>
-          <h3 className='text-text/50 font-medium'>Total</h3>
+          <h3 className='text-text/50 font-medium hidden md:block'>Total</h3>
           <h3 className='text-accent-10 font-bold text-lg rounded-md'>
             ₱  {formatNumber(product.productPrice * product.amount)}
           </h3>
         </div>
       </div>
+
+      <input type="checkbox" onChange={() => handleProductsForCheckout(product)} />
+      {/* <MdAdd size={'20'} className='text-accent-10-dark cursor-pointer' onClick={() => handleProductsForCheckout(product)} /> */}
     </div>
   );
 
@@ -118,13 +119,14 @@ const Cart = ({onCartChange}) => {
       const productInCheckout = pc.some(p => p.id === product.id);
 
       if (!productInCheckout) {
+        setCheckoutCount(checkoutCount + 1)
         return [...pc, product];
       }
 
-      return pc;
+      setCheckoutCount(checkoutCount - 1);
+      return pc.filter(p => p.id != product.id);
     });
 
-    setCheckoutCount(checkoutCount + 1)
   } 
 
   const handleBuyProducts = () => {
@@ -143,6 +145,7 @@ const Cart = ({onCartChange}) => {
       localStorage.setItem("discountData", JSON.stringify(newDiscountData));
     }
     
+    setTotalForDisplay(netTotal);
     setIsCheckoutSuccessfulModalShown(true);
     onCartChange();
     setProductsCheckout([]);
@@ -211,7 +214,7 @@ const Cart = ({onCartChange}) => {
 
                 <div className='mt-auto flex flex-row justify-between border-t-2 border-text/25 py-2'>
                   <div className=''>
-                    <h3 className='text-left font-semibold text-text/50'>Promo Code</h3>
+                    <h3 className='text-left font-semibold text-text/50'>Promo</h3>
 
                     <h5 className='text-right font-bold text-md px-4 py-1 rounded-md shadow-sm bg-main-60-light'>
                       <select onChange={(e) => {
@@ -226,7 +229,7 @@ const Cart = ({onCartChange}) => {
                   </div>
 
                   <div className=''>
-                    <h3 className='text-right font-semibold text-text/50'>Gross Total</h3>
+                    <h3 className='text-right font-semibold text-text/50'>Gross</h3>
                     <h5 className='text-right font-bold text-md px-4 py-1 rounded-md shadow-sm bg-main-60-light'>
                       {formatNumber(grossTotal)}
                     </h5>
@@ -264,7 +267,7 @@ const Cart = ({onCartChange}) => {
 
         <AnimatePresence>
         {isCheckoutSuccessfulModalShown && 
-          <CheckoutSuccessfulModal totalAmount={formatNumber(netTotal)} onCloseCart={() => setIsCheckoutSuccessfulModalShown(false)} />
+          <CheckoutSuccessfulModal totalAmount={formatNumber(totalForDisplay)} onCloseCart={() => setIsCheckoutSuccessfulModalShown(false)} />
         }
         </AnimatePresence>
     </motion.div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, Outlet, useLocation } from 'react-router-dom'
 import ProductData from '../data/ProductData'
-import { MdAdd, MdHorizontalRule, MdAddShoppingCart } from "react-icons/md";
+import { MdAdd, MdHorizontalRule, MdAddShoppingCart, MdCheck  } from "react-icons/md";
 import { ProductDetailsHeaderCard, ProductDetailsPriceCard, ProductDetailsQuantityCard, 
     ProductDetailsAdditionalInformationCard, Breadcrumbs, NotificationPopup  } from '../components';
 import {motion, AnimatePresence, stagger} from 'framer-motion'
@@ -12,6 +12,7 @@ const ProductDetails = ({onCartChange}) => {
     const [productDetails, setProductDetails] = useState({});
     const [popupMessage, setPopupMessage] = useState("");
     const [isNotificationPopupShown, setIsNotificationPopupShown] = useState(false);
+    const [isAddedToCart, setIsAddedToCart] = useState(false);
 
     const MotionAddShopCart = motion.create(MdAddShoppingCart);
 
@@ -29,6 +30,10 @@ const ProductDetails = ({onCartChange}) => {
     }
 
     const buttonVariants = {
+        stop: {
+            backgroundColor: 'var(--color-accent-10)',
+            color: 'var(--color-main-60-light)',
+        },
         hover: {
             backgroundColor: 'var(--color-accent-10)',
             color: 'var(--color-main-60-light)',
@@ -67,6 +72,10 @@ const ProductDetails = ({onCartChange}) => {
     }
 
     const addToCart = () => {
+        if (isAddedToCart) {
+            handleShowPopup("Item is already added to cart");
+            return;
+        }
         const cartData = JSON.parse(localStorage.getItem("cartData")) || [];
 
         let isProductInCart = false;
@@ -85,6 +94,7 @@ const ProductDetails = ({onCartChange}) => {
 
         localStorage.setItem("cartData", JSON.stringify(updatedCartData));
         onCartChange();
+        setIsAddedToCart(true);
         handleShowPopup("Item added to cart!")
     }
 
@@ -157,18 +167,21 @@ const ProductDetails = ({onCartChange}) => {
                     className='flex ml-auto gap-2 items-center'>
                         {/* Add to Cart */}
                         <motion.button 
-                        className=' flex flex-row items-center gap-2 border-accent-10 border-2 text-accent-10 px-4 py-2 rounded-xl cursor-pointer font-semibold'
+                        className={`flex flex-row items-center gap-2 border-accent-10 border-2 ${(isAddedToCart) ? 'bg-accent-10 text-main-60-light' : 'text-accent-10'} px-4 py-2 rounded-xl cursor-pointer font-semibold`}
                         onClick={() => addToCart()}
                         variants={buttonVariants}
-                        initial='initial'
+                        initial={(isAddedToCart) ? 'stop' : 'initial'}
                         whileHover='hover'
                         >
                             <motion.h1
                             >
-                                Add to Cart
+                                {(isAddedToCart) ? 'Added to Cart' : 'Add to Cart'}
                             </motion.h1>
-                            <MotionAddShopCart 
+                            {
+                                (isAddedToCart) ? <MdCheck className='text-main-60-light'/> : <MotionAddShopCart 
                             variants={buttonIconVariants} className='text-main-60-light font-semibold'/>
+                            }
+                            
                         </motion.button>
                     </motion.div>
                 </div>
