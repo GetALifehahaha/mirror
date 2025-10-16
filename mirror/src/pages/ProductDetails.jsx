@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate, Outlet, useLocation } from 'react-router-dom'
+import { useParams, useNavigate, Outlet, useLocation, useOutletContext } from 'react-router-dom'
 import ProductData from '../data/ProductData'
 import { MdAdd, MdHorizontalRule, MdAddShoppingCart, MdCheck  } from "react-icons/md";
 import { ProductDetailsHeaderCard, ProductDetailsPriceCard, ProductDetailsQuantityCard, 
     ProductDetailsAdditionalInformationCard, Breadcrumbs, NotificationPopup  } from '../components';
 import {motion, AnimatePresence, stagger} from 'framer-motion'
 
-const ProductDetails = ({onCartChange}) => {
+const ProductDetails = () => {
     const { id } = useParams();
+    const {onCartChange} = useOutletContext();
     const navigate = useNavigate();
     const [productDetails, setProductDetails] = useState({});
     const [popupMessage, setPopupMessage] = useState("");

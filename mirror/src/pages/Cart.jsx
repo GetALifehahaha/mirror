@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 import ProductData from '../data/ProductData'
 import { MdHorizontalRule, MdAdd  } from 'react-icons/md'
 import {motion, AnimatePresence} from 'framer-motion'
 import { CheckoutSuccessfulModal, ConfirmationModal, NotificationPopup } from '../components'
 
-const Cart = ({onCartChange}) => {
+const Cart = () => {
+
+  const {onCartChange} = useOutletContext();
 
   const [productsCheckout, setProductsCheckout] = useState([]);
   const [checkoutCount, setCheckoutCount] = useState(0);
